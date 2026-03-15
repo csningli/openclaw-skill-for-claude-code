@@ -1,108 +1,99 @@
 
 # 📖 OpenClaw Skill: Claude Engineer Bridge
 
-An advanced, autonomous orchestration layer for **OpenClaw** that leverages **Claude Code** (Anthropic's CLI) as its primary engineering engine.
+In 2026, the synergy between **OpenClaw** (your persistent autonomous assistant) and **Claude Code** (your high-level engineering engine) creates a formidable AI "Super-Employee."
 
-This skill transforms your OpenClaw agent into a **Senior Full-Stack AI Engineer** capable of building, debugging, and deploying web applications and Agent-to-Agent (A2A) APIs while you are away from your terminal.
-
----
-
-## 🚀 Capabilities
-
-| Feature | Description |
-| --- | --- |
-| **Autonomous Scaffolding** | Initialize repositories, git environments, and boilerplate stacks (React, FastAPI, etc.) |
-| **Deep Debugging** | Multi-file analysis and automated test-driven bug fixing using Claude Code's native reasoning. |
-| **A2A Architecture** | Specifically designed to build web apps and APIs that *other* OpenClaw agents can interact with. |
-| **MCP Management** | Commands to install/configure Model Context Protocol servers for expanded tool access. |
-| **CI/CD Integration** | Automated commits, PR descriptions, and deployment triggers. |
+Below is an expanded, professional-grade `SKILL.md` designed to guide OpenClaw in orchestrating Claude Code across the entire software development lifecycle.
 
 ---
 
-## 🛠 Prerequisites
+### File: `~/.openclaw/skills/claude-engineer/SKILL.md`
 
-Before installing this skill, ensure your environment is set up:
+```markdown
+---
+name: claude-engineer
+description: "Directs Claude Code CLI to perform expert-level engineering: repo creation, debugging, app building, and documentation."
+metadata:
+  version: "2.1.0"
+  author: "Gemini-Assistant"
+  capabilities: ["mcp-integration", "web-app-deployment", "autonomous-coding"]
+---
 
-1. **OpenClaw** (v2.0+) installed and running.
-2. **Claude Code CLI** installed:
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
+# Core Objective
+Act as a Senior AI Architect by delegating all heavy-duty coding, system design, and environment configuration to the Claude Code CLI.
+
+# 1. Setup & Environment Rules
+Before any coding task, ensure the "Tools of the Trade" are ready.
+- **Install Claude Code:** If missing, run `curl -fsSL https://claude.ai/install.sh | bash`.
+- **MCP Integration:** When external data is needed (e.g., Google Search, GitHub, Slack), check `claude mcp list`. If a tool is missing, use `claude mcp add [server-name]`.
+- **Plugins:** For specialized logic (e.g., SEO, Frontend), use `/plugin install [plugin-name]`.
+
+# 2. Scenario-Specific Workflows
+
+### A. New Project & Repo Creation
+- **Rule:** Never start in a messy directory. 
+- **Action:** 1. `mkdir [project-name] && cd [project-name]`
+  2. `git init`
+  3. `claude "Initialize a [Framework] project with [Stack] and set up a basic Hello World." --yes`
+
+### B. Extracting Implementation Ideas (Reverse Engineering)
+- **Rule:** Read before you write.
+- **Action:** `claude "Analyze the current architecture and summarize the logic in ARCHITECTURE.md. Do not change code." --read-only`
+
+### C. Expert Debugging
+- **Rule:** Use a "Trace-First" approach.
+- **Action:** `claude "Analyze the following error log: [paste_log]. Find the root cause across the codebase, fix it, and run tests to verify." --yes`
+
+### D. Code Review & Documentation
+- **Rule:** Quality is non-negotiable.
+- **Action:** - **Review:** `claude "Review the last commit for security vulnerabilities and performance bottlenecks."`
+  - **Docs:** `claude "Generate JSDoc/Docstrings for all functions in /src and update README.md." --yes`
+
+# 3. Building "Agent-Accessible" Web Apps
+This is a high-priority scenario. When building apps intended for use by *other* OpenClaw agents:
+- **API First:** Claude must prioritize REST or GraphQL endpoints over complex UIs.
+- **Self-Documenting:** Every app must include a `/docs` or `openapi.json` so other agents can "read" how to use the app.
+- **Standardized Output:** Instruct Claude to ensure all API responses are valid JSON.
+- **Deployment:** Use `claude "Build the web app and deploy it to [Vercel/Netlify/Docker]. Ensure the URL is outputted clearly." --yes`
+
+# 4. Version Control (Git)
+- **Rule:** Small, semantic commits.
+- **Action:** After every successful task, run `claude "Commit these changes with a conventional commit message." --yes`
+
+# 5. Operational Constraints
+- **Recursive Limit:** Stop and ask the user if Claude Code fails to solve a bug after 3 attempts.
+- **Confirmation:** Use the `--yes` flag only for known safe operations. For deletions or major refactors, omit `--yes` to let the user review the plan in the OpenClaw chat.
 
 ```
 
-
-3. **Authentication:** Ensure you have run `claude login` and are successfully authenticated on the host machine.
-
 ---
 
-## 📦 Installation
+### How to Power-Up your Claude Code (2026 Manual)
 
-1. **Clone this repository** into your OpenClaw skills directory:
-```bash
-mkdir -p ~/.openclaw/skills/claude-engineer
-git clone https://github.com/YOUR_USERNAME/openclaw-claude-engineer.git ~/.openclaw/skills/claude-engineer
+To ensure OpenClaw can actually execute the rules in the `SKILL.md` above, you need to configure Claude Code's ecosystem:
 
-```
+#### 1. Installing MCP (Model Context Protocol)
 
+MCP is how Claude talks to your local files, databases, and Google.
 
-2. **Enable the Skill** in your `~/.openclaw/openclaw.json`:
-```json
-"skills": {
-  "entries": {
-    "claude-engineer": { "enabled": true }
-  }
-}
-
-```
-
-
-3. **Restart your Gateway:**
-```bash
-openclaw gateway restart
-
-```
+* **To add a tool:** Inside your terminal, run `claude mcp add [name]`.
+* **Common 2026 Servers:** * `github`: For managing PRs and issues.
+* `google-maps`: For location-aware apps.
+* `postgres`: To let Claude query your databases directly.
 
 
 
----
+#### 2. Installing Plugins
 
-## 🤖 Usage Scenarios
+Plugins are "bundles" of skills. Use these to make Claude a better specialist.
 
-You can trigger this skill via your OpenClaw interface (Telegram, WhatsApp, or CLI):
+* Run `claude` to enter the interactive mode.
+* Type `/plugin` to open the marketplace.
+* **Must-haves for Web Apps:** Install `frontend-design` and `api-generator`.
 
-### 1. Building an Agent-Friendly Web App
+#### 3. Building for other Agents
 
-> *"Hey, use Claude Code to build a FastAPI service for my grocery list. Make sure it has a Swagger UI so my other agents can read and write to it."*
+When you ask OpenClaw to "Build a tool for my other bots," the `SKILL.md` tells it to focus on **Machine-to-Machine** (M2M) communication.
 
-### 2. Deep Debugging
-
-> *"I'm getting a 500 error on the /auth endpoint. Have Claude Code find the bug, fix it, and verify with a curl test."*
-
-### 3. Documentation & Review
-
-> *"Analyze the current repo, generate a README.md and ARCHITECTURE.md, and then do a security audit of the environment variables."*
-
----
-
-## 🛡 Security & Safety
-
-* **Non-Interactive Mode:** This skill utilizes the `--yes` flag for efficiency. It is recommended to run OpenClaw in a **sandboxed environment** or a dedicated VPS.
-* **Read-Only First:** For complex refactors, the skill is programmed to run an initial `--read-only` scan to explain its plan before modifying files.
-* **Recursive Protection:** The agent will pause and request manual intervention if Claude Code fails to resolve a loop within 3 attempts.
-
----
-
-## 🤝 Contributing
-
-In 2026, the best skills are community-driven! If you have optimized the prompt logic for specific frameworks or better MCP handling, please:
-
-1. Fork the repo.
-2. Create your feature branch.
-3. Submit a Pull Request.
-
----
-
-## 📄 License
-
-MIT License - Feel free to use and modify for your own autonomous workflows.
+* **Example Prompt to OpenClaw:** *"Use Claude Code to build a Python FastAPI that tracks my expenses. Make sure it has a Swagger UI so my other agents can learn how to post data to it."*
 
